@@ -1,9 +1,9 @@
 #include "OLED_SSD1306.h"
 
 void OLED_SSD1306_Init(OLED_SSD1306_st* oled_ssd1306, SSD1306_Interface_t interface,
-		SPI_Transmit spiTransmit, SPI_ChipSelect spiChipSelect,
+		SPI_Transmit spiTransmit, SPI_ChipSelect spiChipSelect, SPI_DataCommand spiDataCommand,
 		I2C_Transmit i2cTransmit, I2C_Address i2cAddress){
-	SSD1306_Init(&oled_ssd1306->ssd1306, interface, spiTransmit, spiChipSelect, i2cTransmit, i2cAddress);
+	SSD1306_Init(&oled_ssd1306->ssd1306, interface, spiTransmit, spiChipSelect, spiDataCommand, i2cTransmit, i2cAddress);
 	SSD1306_SendTwoByteCommand(&oled_ssd1306->ssd1306, SET_MULTIPLEX_RATIO, 0x3F);
 	SSD1306_SendTwoByteCommand(&oled_ssd1306->ssd1306, SET_DISPLAY_OFFSET, 0x00);
 	SSD1306_SendOneByteCommand(&oled_ssd1306->ssd1306, SET_DISPLAY_START_LINE);
@@ -38,11 +38,7 @@ void OLED_SSD1306_SetPixel(OLED_SSD1306_st* oled_ssd1306, uint8_t x, uint8_t y, 
 }
 
 void OLED_SSD1306_DrawDisplay(OLED_SSD1306_st* oled_ssd1306){
-	SSD1306_SendOneByteCommand(&oled_ssd1306->ssd1306, SET_COLUMN_ADDRESS);
-	SSD1306_SendOneByteCommand(&oled_ssd1306->ssd1306, 0x00);
-	SSD1306_SendOneByteCommand(&oled_ssd1306->ssd1306, SSD1306_WIDTH - 1);
-	SSD1306_SendOneByteCommand(&oled_ssd1306->ssd1306, SET_PAGE_ADDRESS);
-	SSD1306_SendOneByteCommand(&oled_ssd1306->ssd1306, 0x00);
-	SSD1306_SendOneByteCommand(&oled_ssd1306->ssd1306, SSD1306_HEIGHT / 8 - 1);
+	SSD1306_SendThreeByteCommand(&oled_ssd1306->ssd1306, SET_COLUMN_ADDRESS, 0x00, SSD1306_WIDTH - 1);
+	SSD1306_SendThreeByteCommand(&oled_ssd1306->ssd1306, SET_PAGE_ADDRESS, 0x00, SSD1306_HEIGHT / 8 - 1);
 	SSD1306_SendData(&oled_ssd1306->ssd1306, oled_ssd1306->displayBuffer, DISPLAY_BUFFER_SIZE);
 }
