@@ -1,8 +1,10 @@
 #include "Display.h"
 #include "font5x7.h"
+#include "font4x6.h"
 #include <string.h>
 
 extern Symbol_5x7_st symbols5x7[255];
+extern Symbol_4x6_st symbols4x6[255];
 
 void Display_Init(Display_st* display, SSD1306_Interface_t interface,
 		SPI_Transmit spiTransmit, SPI_ChipSelect spiChipSelect, SelectDataCommand selectDataCommand,
@@ -53,13 +55,17 @@ void Display_SetTextCursor(Display_st* display, uint8_t row, uint8_t column){
 void Display_PrintText(Display_st* display, char* text){
 	size_t textLength = strlen(text);
 	for(size_t i = 0; i < textLength; i++){
-		for(uint8_t j = 0; j < symbols5x7[*(text + i) - 65].symbolWidth; j++){
-			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, symbols5x7[*(text + i) - 65].symbolData[j]);
+		display->cursor.positionX++;
+		for(uint8_t j = 0; j < symbols4x6[*(text + i) - 65].symbolWidth; j++){
+			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, symbols4x6[*(text + i) - 65].symbolData[j]);
 			display->cursor.positionX++;
 		}
-		display->cursor.positionX++;
 	}
-	
+	display->cursor.positionX--;
+}
+
+void Display_InvertPage(Display_st* display, uint8_t row, uint8_t column){
+	display->displayBuffer[column + row * DISPLAY_WIDTH] = ~(display->displayBuffer[column + row * DISPLAY_WIDTH]);
 }
 
 void Display_Refresh(Display_st* display){
