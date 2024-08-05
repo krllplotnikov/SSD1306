@@ -56,8 +56,8 @@ void Display_PrintText(Display_st* display, char* text){
 	size_t textLength = strlen(text);
 	for(size_t i = 0; i < textLength; i++){
 		display->cursor.positionX++;
-		for(uint8_t j = 0; j < symbols4x6[*(text + i) - 65].symbolWidth; j++){
-			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, symbols4x6[*(text + i) - 65].symbolData[j]);
+		for(uint8_t j = 0; j < symbols4x6[*(text + i) - 192].symbolWidth; j++){
+			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, symbols4x6[*(text + i) - 192].symbolData[j]);
 			display->cursor.positionX++;
 		}
 	}
