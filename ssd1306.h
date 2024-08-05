@@ -19,13 +19,13 @@ typedef uint8_t I2C_Address;
 
 typedef void (*SPI_Transmit)(uint8_t* data, size_t size);
 typedef void (*SPI_ChipSelect)(uint8_t level);
-typedef void (*SPI_DataCommand)(uint8_t level);
+typedef void (*SelectDataCommand)(uint8_t level);
 typedef void (*I2C_Transmit)(uint8_t address, uint8_t* data, size_t size);
 
 typedef struct{
 	SPI_Transmit spiTransmit;
 	SPI_ChipSelect spiChipSelect;
-	SPI_DataCommand spiDataCommand;
+	SelectDataCommand selectDataCommand;
 	I2C_Transmit i2cTransmit;
 	I2C_Address i2cAddress;
 	SSD1306_Interface_t interface;
@@ -53,9 +53,12 @@ enum SSD1306_TwoByteCommand_e{
 	SET_CONTRAST_CONTROL = 0x81,
 	SET_OSC_FREQUENCY = 0xD5,
 	ENABLE_CHARGE_PUMP_REGULATION = 0x8D,
+	SET_MEMORY_ADDRESSING_MODE = 0x20
+};
+
+enum SSD1306_ThreeByteCommand_e{
 	SET_COLUMN_ADDRESS = 0x21,
 	SET_PAGE_ADDRESS = 0x22,
-	SET_MEMORY_ADDRESSING_MODE = 0x20
 };
 
 #ifdef __cplusplus
@@ -63,7 +66,7 @@ extern "C" {
 #endif
 
 void SSD1306_Init(SSD1306_st* ssd1306, SSD1306_Interface_t interface,
-		SPI_Transmit spiTransmit, SPI_ChipSelect spiChipSelect, SPI_DataCommand spiDataCommand,
+		SPI_Transmit spiTransmit, SPI_ChipSelect spiChipSelect, SelectDataCommand selectDataCommand,
 		I2C_Transmit i2cTransmit, I2C_Address i2cAddress);
 void SSD1306_SendOneByteCommand(SSD1306_st* ssd1306, SSD1306_Command_t command);
 void SSD1306_SendTwoByteCommand(SSD1306_st* ssd1306, SSD1306_Command_t command, uint8_t value);
