@@ -3,7 +3,7 @@
 
 #include "stdio.h"
 
-#define SYMBOL_4X6_MAX_WIDTH 4
+#define SYMBOL_4X6_MAX_WIDTH 6
 
 typedef struct{
 	uint8_t symbolWidth;
