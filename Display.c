@@ -1,10 +1,8 @@
 #include "Display.h"
-#include "font5x7.h"
-#include "font4x6.h"
+#include "microFont.h"
 #include <string.h>
 
-extern Symbol_5x7_st symbols5x7[255];
-extern Symbol_4x6_st symbols4x6[255];
+extern MicroSymbol_st microSymbols[255];
 
 void Display_Init(Display_st* display, SSD1306_Interface_t interface,
 		SPI_Transmit spiTransmit, SPI_ChipSelect spiChipSelect, SelectDataCommand selectDataCommand,
@@ -56,12 +54,16 @@ void Display_PrintText(Display_st* display, char* text){
 	size_t textLength = strlen(text);
 	for(size_t i = 0; i < textLength; i++){
 		display->cursor.positionX++;
-		for(uint8_t j = 0; j < symbols4x6[(uint8_t)*(text + i)].symbolWidth; j++){
-			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, symbols4x6[(uint8_t)*(text + i)].symbolData[j]);
+		for(uint8_t j = 0; j < microSymbols[(uint8_t)*(text + i)].symbolWidth; j++){
+			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, microSymbols[(uint8_t)*(text + i)].symbolData[j]);
 			display->cursor.positionX++;
 		}
 	}
 	display->cursor.positionX--;
+}
+
+void Display_Clear(Display_st* display){
+	memset(display->displayBuffer, 0, DISPLAY_BUFFER_SIZE);
 }
 
 void Display_InvertPage(Display_st* display, uint8_t row, uint8_t column){

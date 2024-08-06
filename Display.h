@@ -29,8 +29,10 @@ void Display_SetPixel(Display_st* display, uint8_t x, uint8_t y, uint8_t state);
 void Display_SetPage(Display_st* display, uint8_t row, uint8_t column, uint8_t data);
 void Display_InvertPage(Display_st* display, uint8_t row, uint8_t column);
 void Display_SetTextCursor(Display_st* display, uint8_t row, uint8_t column);
-TextCursor_st Display_GetTextCursor(Display_st* display);
 void Display_PrintText(Display_st* display, char* text);
+void Display_Clear(Display_st* display);
 void Display_Refresh(Display_st* display);
+
+TextCursor_st Display_GetTextCursor(Display_st* display);
 
 #endif

@@ -3,12 +3,12 @@
 
 #include "stdio.h"
 
-#define SYMBOL_4X6_MAX_WIDTH 6
+#define MICRO_SYMBOL_MAX_WIDTH 6
 
 typedef struct{
 	uint8_t symbolWidth;
 	uint8_t symbolHeight;
-	uint8_t symbolData[SYMBOL_4X6_MAX_WIDTH];
-}Symbol_4x6_st;
+	uint8_t symbolData[MICRO_SYMBOL_MAX_WIDTH];
+}MicroSymbol_st;
 
 #endif
