@@ -54,18 +54,9 @@ void Display_PrintText(Display_st* display, char* text){
 	size_t textLength = strlen(text);
 	for(size_t i = 0; i < textLength; i++){
 		display->cursor.positionX++;
-		if(display->cursor.positionX + microSymbols[(uint8_t)*(text + i)].symbolWidth > 127){
-			display->cursor.positionX = 0;
-			display->cursor.positionY++;			
-		}
-		
 		for(uint8_t j = 0; j < microSymbols[(uint8_t)*(text + i)].symbolWidth; j++){
 			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, microSymbols[(uint8_t)*(text + i)].symbolData[j]);
 			display->cursor.positionX++;
-			if(display->cursor.positionX > 127){
-				display->cursor.positionX = 0;
-				display->cursor.positionY++;
-			}
 		}
 	}
 	display->cursor.positionX--;
