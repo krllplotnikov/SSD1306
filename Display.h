@@ -30,6 +30,7 @@ void Display_SetPage(Display_st* display, uint8_t row, uint8_t column, uint8_t d
 void Display_InvertPage(Display_st* display, uint8_t row, uint8_t column);
 void Display_SetTextCursor(Display_st* display, uint8_t row, uint8_t column);
 void Display_PrintText(Display_st* display, char* text);
+void Display_DrawBitmap(Display_st* display, uint8_t* bitmap, uint8_t height, uint8_t width, uint8_t startX, uint8_t startY);
 void Display_Clear(Display_st* display);
 void Display_Refresh(Display_st* display);
 

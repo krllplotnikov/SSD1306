@@ -63,6 +63,16 @@ void Display_PrintText(Display_st* display, char* text){
 	display->cursor.positionX--;
 }
 
+void Display_DrawBitmap(Display_st* display, uint8_t* bitmap, uint8_t height, uint8_t width, uint8_t startX, uint8_t startY){
+	for(uint8_t y = 0; y < height; y++){
+		for(uint8_t x = 0; x < width; x++){
+			uint8_t pixelState = bitmap[x + (y / 8) * width] & (1 << y) ? PIXEL_STATE_ON : PIXEL_STATE_OFF;
+			Display_SetPixel(display, startX + x, startY + y, pixelState);
+		}
+	}
+
+}
+
 void Display_Clear(Display_st* display){
 	memset(display->displayBuffer, 0, DISPLAY_BUFFER_SIZE);
 }
