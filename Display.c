@@ -53,6 +53,7 @@ void Display_SetTextCursor(Display_st* display, uint8_t row, uint8_t column){
 void Display_PrintText(Display_st* display, char* text){
 	size_t textLength = strlen(text);
 	for(size_t i = 0; i < textLength; i++){
+		Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, 0x00);
 		display->cursor.positionX++;
 		for(uint8_t j = 0; j < microSymbols[(uint8_t)*(text + i)].symbolWidth; j++){
 			Display_SetPage(display, display->cursor.positionY, display->cursor.positionX, microSymbols[(uint8_t)*(text + i)].symbolData[j]);
